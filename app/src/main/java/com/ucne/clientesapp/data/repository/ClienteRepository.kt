@@ -54,26 +54,33 @@ class ClienteRepository @Inject constructor(
         }
     }
 
-    suspend fun postCliente(cliente: ClienteDto): Resource<ClienteDto> {
-        return try {
+    fun postCliente(cliente: ClienteDto): Flow<Resource<ClienteDto>> = flow{
+        try {
+            emit(Resource.Loading())
+
             val response = clienteApi.postClientes(cliente)
 
             if (response.isSuccessful) {
                 val responseBody = response.body()
                 if (responseBody != null) {
-                    Resource.Success(responseBody)
+                   emit(Resource.Success(responseBody))
+                    emit(Resource.Error("Se ha podido guardar"))
                 } else {
-                    Resource.Error("Respuesta vacía del servidor")
+                   emit(Resource.Error("Respuesta vacía del servidor"))
                 }
             } else {
-                Resource.Error("Error en la solicitud: ${response.code()} ${response.message()}")
+                emit(Resource.Error("Error en la solicitud: ${response.code()} ${response.message()}"))
             }
+        } catch (e: HttpException) {
+            //error general HTTP
+            emit(Resource.Error(e.message ?: "Error HTTP GENERAL"))
         } catch (e: IOException) {
-            // Error de conexión a Internet
-            Resource.Error("Verificar tu conexión a internet")
-        } catch (e: Exception) {
-            // Otros errores
-            Resource.Error("Error desconocido: ${e.message ?: "verificar tu conexión a internet"}")
+            //debe verificar tu conexion a internet
+            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
+        }
+        catch (e: Exception) {
+            //debe verificar tu conexion a internet
+            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
         }
     }
 

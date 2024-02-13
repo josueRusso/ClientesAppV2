@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +16,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -66,7 +70,7 @@ fun HomeScreen(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF8BDBF3)),
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF39393A)),
                     title = {
                         Text(
                             "ClientesApp",
@@ -107,7 +111,7 @@ fun HomeScreen(
                 }
 
                 Column(
-                    Modifier.fillMaxSize()
+                    Modifier.fillMaxSize().verticalScroll(rememberScrollState(),enabled = true)
                 ) {
                     Spacer(modifier = Modifier.padding(0.dp, 50.dp))
 

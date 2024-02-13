@@ -10,8 +10,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -24,6 +30,7 @@ import com.ucne.clientesapp.ui.RegistroCliente.RegistroClienteScreen
 import com.ucne.clientesapp.ui.SeleccionCliente.SeleccionClienteScreen
 import com.ucne.clientesapp.ui.theme.ClientesAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 
 @AndroidEntryPoint
@@ -38,8 +45,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    var refreshing by remember { mutableStateOf(false) }
                     val navController = rememberNavController()
+                    LaunchedEffect(refreshing) {
+                        delay(1000)
+                        refreshing = false
+                    }
                     Menu(navController = navController)
 
                 }

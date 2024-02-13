@@ -64,52 +64,42 @@ private fun Contenido(cliente : ClienteDto){
                 .padding(16.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Text(
-                    text = "Codigo del Cliente: " + cliente.codigoCliente.toString(),
-                    fontSize = 20.sp
-                )
-                Spacer(modifier = Modifier.padding(0.dp,10.dp))
 
-                Text(
+            Text(
+                text = "# " + cliente.codigoCliente.toString(),
+                fontSize = 30.sp
+            )
+            Spacer(modifier = Modifier.padding(0.dp,10.dp))
+
+            Text(
                     text = "Nombres: " + cliente.nombres,
-                    fontSize = 20.sp
-                )
-            }
+                    fontSize = 25.sp
+            )
 
             Spacer(modifier = Modifier.padding(0.dp,10.dp))
 
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Text(
-                    text = "Direccion: " + cliente.direccion,
-                    fontSize = 20.sp
-                )
-                Spacer(modifier = Modifier.padding(0.dp,10.dp))
+            Text(
+                text = "Direccion: " + cliente.direccion,
+                fontSize = 25.sp
+            )
+            Spacer(modifier = Modifier.padding(0.dp,10.dp))
 
-                Text(
-                    text = "Telefono: " + cliente.telefono,
-                    fontSize = 20.sp
-                )
-
-            }
+            Text(
+                text = "Telefono: " + cliente.telefono,
+                fontSize = 25.sp
+            )
 
             Spacer(modifier = Modifier.padding(0.dp,10.dp))
 
             Text(
                 text = "Celular: " + cliente.celular,
-                fontSize = 20.sp
+                fontSize = 25.sp
             )
             Spacer(modifier = Modifier.padding(0.dp,10.dp))
 
             Text(
                 text = "Cedula: " + cliente.cedula,
-                fontSize = 19.sp
+                fontSize = 25.sp
             )
 
             Spacer(modifier = Modifier.padding(0.dp,10.dp))
@@ -126,7 +116,7 @@ private fun Base(cliente : ClienteDto) {
     Scaffold(
         topBar = {
             TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF8BDBF3)),
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF39393A)),
                 title = {
                     Text(
                         "ClienteApp",

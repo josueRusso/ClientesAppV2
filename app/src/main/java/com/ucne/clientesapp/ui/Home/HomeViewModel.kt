@@ -92,7 +92,7 @@ data class ClienteListState(
         "",
         "",
         "",
-        1
+        0
 
     ),
     val selectedCliente: ClienteDto? = null,
