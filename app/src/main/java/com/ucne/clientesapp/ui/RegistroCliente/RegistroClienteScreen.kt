@@ -103,6 +103,7 @@ private fun Base(viewModel: RegistroClienteViewModel) {
                 }
 
             }
+            Spacer(modifier = Modifier.padding(0.dp,30.dp))
             RegistroCliente(viewModel = viewModel)
         }
 
@@ -133,7 +134,7 @@ private fun RegistroCliente(viewModel: RegistroClienteViewModel) {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.padding(0.dp, 40.dp))
+
             Text(
                 text = "Registro de Cliente",
                 fontWeight = FontWeight.Bold,
