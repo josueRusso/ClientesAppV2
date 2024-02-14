@@ -238,12 +238,13 @@ private fun CardCliente(cliente: ClienteDto,onClickSeleccionado: (Int) -> Unit) 
             ) {
                 Text(
                     modifier = Modifier.padding(5.dp,0.dp),
-                    text = "# ${cliente.codigoCliente}")
+                    text = "  # ${cliente.codigoCliente}")
                 Text(
                     modifier = Modifier.padding(5.dp,0.dp),
                     text = "Nombre : ${cliente.nombres}")
+
             }
-            Spacer(modifier = Modifier.padding(0.dp, 15.dp))
+            Spacer(modifier = Modifier.padding(0.dp, 10.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -252,9 +253,7 @@ private fun CardCliente(cliente: ClienteDto,onClickSeleccionado: (Int) -> Unit) 
                 Text(
                     modifier = Modifier.padding(5.dp,0.dp),
                     text = "Telefono : ${cliente.telefono}")
-                Text(
-                    modifier = Modifier.padding(5.dp,0.dp),
-                    text = "Cedula : ${cliente.cedula}")
+
             }
         }
     }
