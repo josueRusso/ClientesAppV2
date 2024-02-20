@@ -20,6 +20,6 @@ interface ClienteApi {
 
     @POST("api/Clientes")
     @Headers("X-API-key: test")
-    suspend fun postClientes(@Body clienteDto: ClienteDto ) : Response<ClienteDto>
+    suspend fun postClientes(@Body clienteDto: ClienteDto ) : ClienteDto
 
 }

@@ -48,6 +48,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ucne.clientesapp.data.remote.dto.ClienteDto
@@ -84,7 +85,7 @@ private fun Base(viewModel: RegistroClienteViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState(),enabled = true)
+                //.verticalScroll(rememberScrollState(),enabled = true)
         ) {
             if (uiState.isLoading) {
                 Column(
@@ -112,15 +113,9 @@ private fun Base(viewModel: RegistroClienteViewModel) {
 
 @Composable
 private fun RegistroCliente(viewModel: RegistroClienteViewModel) {
-    var cliente: ClienteDto
-    val context = LocalContext.current
-    var codigoCliente by remember { mutableStateOf("0") }
-    var nombres by remember { mutableStateOf("") }
-    var direccion by remember { mutableStateOf("") }
-    var telefono by remember { mutableStateOf("") }
-    var celular by remember { mutableStateOf("") }
-    var cedula by remember { mutableStateOf("") }
-    var tipoComprobante by remember { mutableStateOf("0") }
+    val stateVertical = rememberScrollState(0)
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val cliente = state.cliente
 
     ElevatedCard(
         modifier = Modifier
@@ -144,19 +139,8 @@ private fun RegistroCliente(viewModel: RegistroClienteViewModel) {
             )
 
             OutlinedTextField(
-                value = codigoCliente,
-                onValueChange = { codigoCliente = it },
-                label = { Text(text = "Codigo del Cliente ") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(5.dp, 0.dp),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next)
-            )
-
-            OutlinedTextField(
-                value = nombres,
-                onValueChange = { nombres = it },
+                value = cliente.nombres,
+                onValueChange = { viewModel.onEvent(ClienteEvent.NombreChanged(it)) },
                 label = { Text(text = "Nombre") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -164,8 +148,8 @@ private fun RegistroCliente(viewModel: RegistroClienteViewModel) {
             )
 
             OutlinedTextField(
-                value = direccion,
-                onValueChange = { direccion = it },
+                value = cliente.direccion,
+                onValueChange = { viewModel.onEvent(ClienteEvent.DireccionChanged(it)) },
                 label = { Text(text = "Direccion") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -173,8 +157,8 @@ private fun RegistroCliente(viewModel: RegistroClienteViewModel) {
             )
 
             OutlinedTextField(
-                value = telefono,
-                onValueChange = { telefono = it },
+                value = cliente.telefono,
+                onValueChange = { viewModel.onEvent(ClienteEvent.TelefonoChanged(it)) },
                 label = { Text(text = "Telefono") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -185,8 +169,8 @@ private fun RegistroCliente(viewModel: RegistroClienteViewModel) {
             )
 
             OutlinedTextField(
-                value = celular,
-                onValueChange = { celular = it },
+                value = cliente.celular,
+                onValueChange = { viewModel.onEvent(ClienteEvent.CelularChanged(it)) },
                 label = { Text(text = "Celular") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -196,8 +180,8 @@ private fun RegistroCliente(viewModel: RegistroClienteViewModel) {
             )
 
             OutlinedTextField(
-                value = cedula,
-                onValueChange = { cedula = it },
+                value = cliente.cedula,
+                onValueChange = { viewModel.onEvent(ClienteEvent.CedulaChanged(it)) },
                 label = { Text(text = "Cedula") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -206,8 +190,8 @@ private fun RegistroCliente(viewModel: RegistroClienteViewModel) {
                     imeAction = ImeAction.Next)
             )
             OutlinedTextField(
-                value = tipoComprobante,
-                onValueChange = { tipoComprobante = it },
+                value = cliente.tipoComprobante.toString(),
+                onValueChange = { viewModel.onEvent(ClienteEvent.TipoComprobanteChanged(it)) },
                 label = { Text(text = "tipo Comprobante") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -224,22 +208,7 @@ private fun RegistroCliente(viewModel: RegistroClienteViewModel) {
             ) {
                 Button(
                     onClick = {
-                        viewModel.postCliente(ClienteDto(
-                            codigoCliente.toInt(),
-                            nombres,
-                            direccion,
-                            telefono,
-                            celular,
-                            cedula,
-                            tipoComprobante.toInt()
-                        ))
-                        codigoCliente = "0"
-                        nombres = ""
-                        direccion = ""
-                        telefono = ""
-                        celular = ""
-                        cedula = ""
-                        tipoComprobante = "0"
+                        viewModel.onEvent(ClienteEvent.onSave)
                     },
                     modifier = Modifier
                         .weight(1f)
@@ -256,13 +225,7 @@ private fun RegistroCliente(viewModel: RegistroClienteViewModel) {
 
                 Button(
                     onClick = {
-                        codigoCliente = "0"
-                        nombres = ""
-                        direccion = ""
-                        telefono = ""
-                        celular = ""
-                        cedula = ""
-                        tipoComprobante = "0"
+                        viewModel.onEvent(ClienteEvent.onLimpiar)
                     },
                     modifier = Modifier
                         .weight(1f)

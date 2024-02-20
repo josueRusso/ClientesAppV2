@@ -58,19 +58,10 @@ class ClienteRepository @Inject constructor(
         try {
             emit(Resource.Loading())
 
-            val response = clienteApi.postClientes(cliente)
+            clienteApi.postClientes(cliente)
 
-            if (response.isSuccessful) {
-                val responseBody = response.body()
-                if (responseBody != null) {
-                   emit(Resource.Success(responseBody))
-                    emit(Resource.Error("Se ha podido guardar"))
-                } else {
-                   emit(Resource.Error("Respuesta vacía del servidor"))
-                }
-            } else {
-                emit(Resource.Error("Error en la solicitud: ${response.code()} ${response.message()}"))
-            }
+            emit(Resource.Success(cliente))
+
         } catch (e: HttpException) {
             //error general HTTP
             emit(Resource.Error(e.message ?: "Error HTTP GENERAL"))
@@ -83,5 +74,4 @@ class ClienteRepository @Inject constructor(
             emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
         }
     }
-
 }
